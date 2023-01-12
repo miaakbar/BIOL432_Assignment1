@@ -1,0 +1,170 @@
+---
+title: "Week 01"
+author: "Mia Akar"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Libraries 
+
+library(ggplot2)
+
+# Random Numbers 
+
+1. Genarate a vector of 100 numbers drawn from a random normal distribution w a mean=10 and sd=5
+
+```{r randomnormal}
+nvec <- rnorm(100, 10, 5)
+```
+
+```{r normalprob}
+# probability distribution 
+x<- c(0,5,10,15,25)
+y <- pnorm(x, mean=10, sd=5)
+qplot(x,y)
+```
+
+```{r normalprob}
+# density function 
+x<- c(0,5,10,15,25)
+y <- dnorm(x, mean=10, sd=5)
+qplot(x,y)
+```
+
+2. Generate a vector of 100 numbers drawn from a random poisson distribution w k=15
+
+```{r}
+pvec <- rpois(100,15)
+```
+
+# 'sample' vs 'rep' vs 'replicate' vs 'seq'
+
+```{r}
+sample(c("A","B","C"), 10, replace = TRUE)
+#replace = false means each thing can only be sampled once 
+#sample pulls as many things you would like from a vector 
+```
+
+```{r}
+rep(rnorm(3), 3)
+#sampling 3 values from rnorm and we are replicating that to be the exact same three values 
+```
+
+```{r}
+replicate(3,rnorm(3))
+#matrix of 3x3. Each time we sample three values, those values are different 
+```
+
+# Element (aka Cell) vs vector vs matrix vs data frame
+
+# list objects 
+
+These are common output from R functions like 'lm()' 'princomp()'
+```{r}
+list(name= "my list", numbers = rnorm(10), letters=sample(c("A","B","C"),10,replace=T))
+#each component gets a little $ that we can use to slice the list 
+```
+
+# 'print' vs 'paste'
+```{r}
+
+print(pvec)
+paste(pvec)
+#paste changes the vector into a string and you can combine strings 
+```
+
+
+# Graphing with ggplot 
+
+```{r}
+xdat <- data.frame(X=rnorm(100),
+                   Y=rnorm(100))
+ggplot(aes(x=X,y=Y,data=xdat)) + geom_point()
+```
+
+
+# Data managment 
+
+dplyr, join, pivot 
+
+# Custom functions
+
+```{r}
+mean(c(1,2,3,4,5))
+
+Average <- function(x) {
+  #this is where the function goes
+  return(sum(x)/length(x))
+}
+```
+
+```{r}
+Average(rnorm(100))
+```
+
+# Flow control
+
+## if/else
+
+```{r}
+if(1==1){}
+#if it returns true in the normal brackets, it will do the thing in the curly brackets
+```
+
+```{r}
+x<- 2
+
+if(x > 5){
+  print("yes, it's more than 5")
+} else{
+  if(x >= 2){
+    print("between 2 and 5")
+  } else{
+    print("2 or less")
+  }
+}
+
+```
+
+```{r}
+ifelse(1==1,"t","f")
+#same as above but efficient for short comparisons as opposed to more complex/longer statements 
+```
+
+## for(){}
+
+```{r}
+for(i in 1:10) {
+  print(i)
+}
+  #i can be called anything 
+```
+
+```{r}
+mydat<- data.frame(
+  x=paste("X",c(1:10)),
+  y=paste("Y",c(1:10)))
+
+  for(row in c(1:10)){
+  print(mydat[row,1])
+    print(mydat[row,2])
+}
+```
+
+```{r}
+#we can nest forloops
+for(row in c(1:10)){
+  for(col in c(1:2)){
+    print(mydat[row,col])
+  }
+  print(row)  
+}
+```
+
+## while(){}
+
+# model time
+
